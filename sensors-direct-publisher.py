@@ -33,13 +33,13 @@ sns = boto3.client("sns", region_name=REGION)
 def publish(id:str, value: int): 
     dataJson = json.dumps({"sensorId": id, "value": value, "timestamp":int(time.time())})
     print(sns.publish( TopicArn=TOPIC_ARN,
-    Message=json.dumps(dataJson)))
+    Message=dataJson))
 def getAbnormalValue(id: str) :
     return random.randint(SENSORS_LOW_VALUES[id][0],SENSORS_LOW_VALUES[id][1] )  if random.random() < PROBABILITY_LOW_VALUES\
          / 100 else random.randint(SENSORS_HIGH_VALUES[id][0],SENSORS_HIGH_VALUES[id][1] )
 
 def getNormalValue(id: str) :
-    random.randint(SENSORS_NORMAL_VALUES[id][0],SENSORS_NORMAL_VALUES[id][1] )
+    return random.randint(SENSORS_NORMAL_VALUES[id][0],SENSORS_NORMAL_VALUES[id][1] )
  
 def getIdValue():
     id = random.choice(SENSOR_IDS) 
